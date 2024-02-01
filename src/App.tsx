@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import './App.css';
 import axios from 'axios';
 import { Country } from './models/Country';
+import { Card } from './components/Card';
+import { Header } from './components/Header';
 
 function App() {
   const [countries, setCountries] = useState<Country[]>([] as Country[]);
@@ -20,12 +21,14 @@ function App() {
 
   return (
     <>
-      <h1>HEllo</h1>
-      {countries.map((country) => (
-        <div key={country.name.official}>
-          <p>{country.name.official}</p>
+      <Header />
+      <div className="flex justify-center">
+        <div className="flex justify-between flex-wrap gap-x-8 gap-y-16 w-11/12">
+          {countries.map((country) => (
+            <Card key={country.name} country={country} />
+          ))}
         </div>
-      ))}
+      </div>
     </>
   );
 }
