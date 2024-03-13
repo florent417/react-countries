@@ -2,15 +2,22 @@ import { useEffect, useState } from 'react';
 import { Country } from '../models/Country';
 import { Card } from '../components/Card';
 import { Header } from '../components/Header';
-import { getAllCountries } from '../services/CountriesService';
+import {
+  getAllCountries,
+  getCountriesBySearch,
+} from '../services/CountriesService';
 
 const Countries = () => {
   const [countries, setCountries] = useState<Country[]>([] as Country[]);
   const [searchText, setSearchText] = useState<string>('');
 
   useEffect(() => {
-    fetchInitialData();
-  }, []);
+    if (!searchText && searchText.trim() === '') {
+      fetchInitialData();
+    } else {
+      getSearchedCountries();
+    }
+  }, [searchText]);
 
   const fetchInitialData = async () => {
     const countries = await getAllCountries();
@@ -18,23 +25,27 @@ const Countries = () => {
     setCountries(countries);
   };
 
-  const onChangeSearchText = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    setSearchText(event.target.value);
-    // TODO: Change event text
+  const getSearchedCountries = async () => {
+    const timeOut = setTimeout(async () => {
+      const countries = await getCountriesBySearch(searchText);
+      setCountries(countries);
+    }, 1000);
+
+    return () => clearTimeout(timeOut);
   };
 
   return (
     <>
       <Header />
-      <div className="flex justify-center">
+      <div className="flex flex-col w-11/12 gap-y-16">
         <input
+          className="self-baseline"
           value={searchText}
           type="text"
           placeholder="Search for a country..."
-          onChange={onChangeSearchText}
+          onChange={(event) => setSearchText(event.target.value)}
         />
-        <div className="flex justify-between flex-wrap gap-x-8 gap-y-16 w-11/12">
+        <div className="flex justify-between flex-wrap gap-x-8 gap-y-16">
           {countries.map((country) => (
             <Card key={country.name.common} country={country} />
           ))}
