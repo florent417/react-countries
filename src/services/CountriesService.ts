@@ -8,4 +8,9 @@ const getAllCountries = async () => {
   return response.data;
 };
 
-export { getAllCountries };
+const getCountriesBySearch = async (country: string) => {
+  const response = await axios.get<Country[]>(`${BASE_URL}/name/${country}`);
+  return response.data;
+};
+
+export { getAllCountries, getCountriesBySearch };
