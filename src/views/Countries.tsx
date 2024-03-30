@@ -37,15 +37,17 @@ const Countries = () => {
   return (
     <>
       <Header />
-      <div className="flex flex-col w-11/12 gap-y-16">
-        <input
-          className="self-baseline bg-white"
-          value={searchText}
-          type="text"
-          placeholder="Search for a country..."
-          onChange={(event) => setSearchText(event.target.value)}
-        />
-        <div className="flex justify-between flex-wrap gap-x-8 gap-y-16">
+      <div className="flex flex-col gap-y-16 w-11/12 mx-auto">
+        <div>
+          <input
+            className="bg-white"
+            value={searchText}
+            type="text"
+            placeholder="Search for a country..."
+            onChange={(event) => setSearchText(event.target.value)}
+          />
+        </div>
+        <div className="flex flex-wrap gap-x-8 mx-auto gap-y-16">
           {countries.map((country) => (
             <Card key={country.name.common} country={country} />
           ))}
