@@ -5,7 +5,7 @@ type Props = {
 
 const Card = ({ country }: Props) => {
   return (
-    <div className="bg-white rounded-md flex-[0_0_20%] flex-shrink shadow-sm pb-4">
+    <div className="bg-white rounded-md w-1/5 mx-auto shadow-sm">
       <img src={country.flags.svg} />
       <div className="text-left p-6">
         <p className="text-xl font-bold mb-3">{country.name.common}</p>
