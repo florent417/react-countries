@@ -13,19 +13,19 @@ const Countries = () => {
 
   useEffect(() => {
     if (!searchText && searchText.trim() === '') {
-      fetchInitialData();
+      fetchAllCountries();
     } else {
-      getSearchedCountries();
+      fetchSearchedCountries();
     }
   }, [searchText]);
 
-  const fetchInitialData = async () => {
+  const fetchAllCountries = async () => {
     const countries = await getAllCountries();
 
     setCountries(countries);
   };
 
-  const getSearchedCountries = async () => {
+  const fetchSearchedCountries = async () => {
     const timeOut = setTimeout(async () => {
       const countries = await getCountriesBySearch(searchText);
       setCountries(countries);
@@ -39,7 +39,7 @@ const Countries = () => {
       <Header />
       <div className="flex flex-col w-11/12 gap-y-16">
         <input
-          className="self-baseline"
+          className="self-baseline bg-white"
           value={searchText}
           type="text"
           placeholder="Search for a country..."
