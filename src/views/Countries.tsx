@@ -23,7 +23,7 @@ const Countries = () => {
       <div className="flex justify-center">
         <div className="flex justify-between flex-wrap gap-x-8 gap-y-16 w-11/12">
           {countries.map((country) => (
-            <Card key={country.name} country={country} />
+            <Card key={country.name.common} country={country} />
           ))}
         </div>
       </div>
