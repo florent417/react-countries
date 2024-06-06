@@ -5,7 +5,7 @@ import { Header } from '../components/Header';
 import { getAllCountries } from '../services/CountriesService';
 
 const Countries = () => {
-  const [countries, setCountries] = useState<Country[]>([] as Country[]);
+  const [countries, setCountries] = useState<Country[]>([]);
 
   useEffect(() => {
     fetchInitialData();
