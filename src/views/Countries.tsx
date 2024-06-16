@@ -11,11 +11,16 @@ const Countries = () => {
   const [countries, setCountries] = useState<Country[]>([] as Country[]);
   const [searchText, setSearchText] = useState<string>('');
 
+  // TODO: can we see timeouts, to be certain that they have been deleted?
+  // TODO: cna we use a non async timeout in this case?
   useEffect(() => {
     if (!searchText && searchText.trim() === '') {
       fetchAllCountries();
     } else {
-      fetchSearchedCountries();
+      const timeOut = setTimeout(() => {
+        fetchSearchCountries();
+      }, 1000);
+      return () => clearTimeout(timeOut);
     }
   }, [searchText]);
 
@@ -25,13 +30,9 @@ const Countries = () => {
     setCountries(countries);
   };
 
-  const fetchSearchedCountries = async () => {
-    const timeOut = setTimeout(async () => {
-      const countries = await getCountriesBySearch(searchText);
-      setCountries(countries);
-    }, 1000);
-
-    return () => clearTimeout(timeOut);
+  const fetchSearchCountries = async () => {
+    const countries = await getCountriesBySearch(searchText);
+    setCountries(countries);
   };
 
   return (
