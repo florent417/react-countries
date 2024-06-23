@@ -1,11 +1,12 @@
-import { Country } from '../models/Country';
+import { Country } from '../../models/Country';
+import { Card } from '../common/Card';
 type Props = {
   country: Country;
 };
 
-const Card = ({ country }: Props) => {
+const CountryCard = ({ country }: Props) => {
   return (
-    <div className="bg-white rounded-md flex-[0_0_20%] flex-shrink shadow-sm pb-4">
+    <Card className="bg-white dark:bg-dark-blue rounded-md flex-[0_0_20%] flex-shrink shadow-md pb-4 overflow-hidden">
       <img src={country.flags.svg} />
       <div className="text-left p-6">
         <p className="text-xl font-bold mb-3">{country.name.common}</p>
@@ -21,8 +22,8 @@ const Card = ({ country }: Props) => {
           </p>
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
 
-export { Card };
+export { CountryCard };
