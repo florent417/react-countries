@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Country } from '../models/Country';
-import { Card } from '../components/Card';
+import { CountryCard } from '../components/countries/CountryCard';
 import { Header } from '../components/Header';
 import {
   getAllCountries,
@@ -8,7 +8,7 @@ import {
 } from '../services/CountriesService';
 
 const Countries = () => {
-  const [countries, setCountries] = useState<Country[]>([] as Country[]);
+  const [countries, setCountries] = useState<Country[]>([]);
   const [searchText, setSearchText] = useState<string>('');
 
   // TODO: can we see timeouts, to be certain that they have been deleted?
@@ -63,7 +63,7 @@ const Countries = () => {
         </div>
         <div className="flex flex-wrap gap-x-8 gap-y-16">
           {countries.map((country) => (
-            <Card key={country.name.common} country={country} />
+            <CountryCard key={country.name.common} country={country} />
           ))}
         </div>
       </div>
