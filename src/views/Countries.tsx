@@ -8,10 +8,10 @@ const Countries = () => {
   const [countries, setCountries] = useState<Country[]>([]);
 
   useEffect(() => {
-    fetchInitialData();
+    fetchAllCountries();
   }, []);
 
-  const fetchInitialData = async () => {
+  const fetchAllCountries = async () => {
     const countries = await getAllCountries();
 
     setCountries(countries);
