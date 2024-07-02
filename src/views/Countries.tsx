@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Country } from '../models/Country';
 import { CountryCard } from '../components/countries/CountryCard';
-import { Header } from '../components/Header';
 import {
   getAllCountries,
   getCountriesBySearch,
@@ -37,7 +36,6 @@ const Countries = () => {
 
   return (
     <>
-      <Header />
       <div className="flex flex-col gap-y-8 w-11/12 mx-auto">
         <div>
           <div className="flex w-1/3 gap-6 h-12 bg-white shadow-sm rounded-md">
@@ -61,7 +59,7 @@ const Countries = () => {
             />
           </div>
         </div>
-        <div className="flex flex-wrap gap-x-8 gap-y-16">
+        <div className="flex flex-wrap gap-x-8 gap-y-16 justify-between">
           {countries.map((country) => (
             <CountryCard key={country.name.common} country={country} />
           ))}
