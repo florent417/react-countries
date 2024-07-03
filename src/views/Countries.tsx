@@ -34,7 +34,7 @@ const Countries = () => {
     const countries = await getCountriesBySearch(searchText);
     setCountries(countries);
   };
-
+  // TODO: How to make them fall to the left after search and only 1 row_
   return (
     <>
       <div className="flex flex-col gap-y-8 w-11/12 mx-auto">

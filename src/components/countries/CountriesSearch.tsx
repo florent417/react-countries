@@ -18,6 +18,7 @@ const CountriesSearch = ({ value, onChange }: Props) => {
 
   return (
     <div className="flex w-1/3 gap-6 h-16 bg-white dark:bg-dark-blue shadow-md dark:text-white rounded-md overflow-hidden">
+      {/* TODO: Should this be a button, is that necessary in this case? */}
       <span>
         <svg
           fill={fillColor}
@@ -31,8 +32,10 @@ const CountriesSearch = ({ value, onChange }: Props) => {
         </svg>
       </span>
       {/* TODO: Should this be its own shared component? */}
+      {/* TODO: Should there be an outline? */}
+      {/* TODO: Should this be wrapping everything, incl. the SVG */}
       <input
-        className="bg-white dark:bg-dark-blue dark:text-white dark:placeholder:text-white w-full"
+        className="bg-white text-xl dark:bg-dark-blue dark:text-white dark:placeholder:text-white w-full indent-2 outline-none"
         value={value}
         type="text"
         placeholder="Search for a country..."
