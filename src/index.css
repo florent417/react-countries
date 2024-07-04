@@ -4,9 +4,6 @@
 
 :root {
   color-scheme: light dark;
-  color: hsl(200, 15%, 8%);
-  background-color: hsl(0, 0%, 98%);
-
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

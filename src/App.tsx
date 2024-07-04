@@ -1,9 +1,13 @@
+import { Header } from './components/Header';
 import { Countries } from './views/Countries';
 
 function App() {
   return (
     <>
-      <Countries />
+      <Header />
+      <main className="flex justify-center pt-8">
+        <Countries />
+      </main>
     </>
   );
 }
