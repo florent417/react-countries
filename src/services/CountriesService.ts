@@ -22,4 +22,9 @@ const getAllRegions = async () => {
   return responseData.map((entry) => entry.region);
 };
 
-export { getAllCountries, getAllRegions };
+const getCountriesByRegion = async (region: string) => {
+  const response = await axios.get<Country[]>(`${BASE_URL}/region/${region}`);
+  return response.data;
+};
+
+export { getAllCountries, getAllRegions, getCountriesByRegion };
