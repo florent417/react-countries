@@ -3,7 +3,7 @@ export type Country = {
     common: string;
     official: string;
     nativeName: {
-      eng: {
+      [key: string]: {
         official: string;
         common: string;
       };
@@ -17,7 +17,7 @@ export type Country = {
   status: string;
   unMember: boolean;
   currencies: {
-    AUD: {
+    [key: string]: {
       name: string;
       symbol: string;
     };
@@ -31,7 +31,7 @@ export type Country = {
   region: string;
   subregion: string;
   languages: {
-    eng: string;
+    [key: string]: string;
   };
   translations: {
     [key: string]: {
@@ -41,9 +41,10 @@ export type Country = {
   };
   latlng: number[];
   landlocked: boolean;
+  borders: string[];
   area: number;
   demonyms: {
-    eng: {
+    [key: string]: {
       f: string;
       m: string;
     };
