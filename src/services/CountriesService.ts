@@ -8,4 +8,11 @@ const getAllCountries = async () => {
   return response.data;
 };
 
-export { getAllCountries };
+const getCountry = async (country: string) => {
+  const response = await axios.get<Country[]>(
+    `${BASE_URL}/name/${country}?fullText=true`,
+  );
+  return response.data[0];
+};
+
+export { getAllCountries, getCountry };
