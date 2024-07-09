@@ -63,13 +63,15 @@ const Countries = () => {
   };
   // TODO: How to make them fall to the left after search and only 1 row_
   return (
-    <div className="flex flex-col gap-y-8 w-11/12 mx-auto">
-      <CountriesSearch onChange={setSearchText} value={searchText} />
-      <CountriesRegionFilter
-        regions={regions}
-        selectedRegion={selectedRegion}
-        onChange={setSelectedRegion}
-      />
+    <div className="flex flex-col gap-y-8 w-11/12 mx-auto pt-8">
+      <div className="flex justify-between mb-8">
+        <CountriesSearch onChange={setSearchText} value={searchText} />
+        <CountriesRegionFilter
+          regions={regions}
+          selectedRegion={selectedRegion}
+          onChange={setSelectedRegion}
+        />
+      </div>
       <div className="flex flex-wrap gap-x-8 gap-y-16 justify-between">
         {countries.map((country) => (
           <CountryCard key={country.name.common} country={country} />
