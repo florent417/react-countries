@@ -1,15 +1,15 @@
-import { Header } from './components/Header';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Countries } from './views/Countries';
+import { Layout } from './components/ui/layout/Layout';
 
-function App() {
-  return (
-    <>
-      <Header />
-      <main className="flex justify-center pt-8">
-        <Countries />
-      </main>
-    </>
-  );
+const router = createBrowserRouter([
+  {
+    path: '/',
+    Component: Layout,
+    children: [{ index: true, Component: Countries }],
+  },
+]);
+
+export default function App() {
+  return <RouterProvider router={router} />;
 }
-
-export default App;

@@ -1,4 +1,4 @@
-import { DarkModeSwitch } from './DarkModeSwitch';
+import { DarkModeSwitch } from '../../DarkModeSwitch';
 
 const Header = () => (
   <nav className="bg-white dark:bg-dark-blue h-20 shadow-sm flex justify-center">
