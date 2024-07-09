@@ -7,24 +7,30 @@ import { BackButton } from '../components/common/BackButton';
 export const CountryDetails = () => {
   // TODO: Should this be changed?
   const country = useLoaderData() as Country;
-  const navigate = useNavigate();
 
-  const goBack = () => navigate(-1);
+  const currencies = Object.keys(country.currencies)
+    .map((key) => country.currencies[key].name)
+    .join(', ');
+  const languages = Object.values(country.languages).sort().join(', ');
+  const topLevelDomains = country.tld.join(', ');
+  // TODO: Should it be done this way?
+  const nativeName =
+    country.name.nativeName[Object.keys(country.name.nativeName).pop()!].common;
 
   return (
     <div className="flex flex-col w-11/12 items-start gap-y-16 mt-8">
       <BackButton />
       <Card className="flex flex-grow justify-between w-full m-auto">
-        <img className="w-2/6" src={country!.flags.svg} />
+        <img className="w-2/6" src={country.flags.svg} />
         <section className="text-left p-6 m-auto w-auto">
           <p className="text-3xl font-bold mb-6">{country!.name.common}</p>
-          <div className="flex justify-between m-auto">
+          <div className="flex justify-between m-auto gap-x-10">
             <div className="flex flex-col gap-y-4">
               <p>
-                <b>Native Name:</b> {country.population}
+                <b>Native Name:</b> {nativeName}
               </p>
               <p>
-                <b>Population:</b> {country.population}
+                <b>Population:</b> {country.population.toLocaleString('EN-US')}
               </p>
               <p>
                 <b>Region:</b> {country.region}
@@ -38,13 +44,13 @@ export const CountryDetails = () => {
             </div>
             <div className="flex flex-col gap-y-4">
               <p>
-                <b>Top Level Domain:</b> {country.tld[0]}
+                <b>Top Level Domain:</b> {topLevelDomains}
               </p>
               <p>
-                <b>Currencies:</b> {Object.keys(country.currencies)[0]}
+                <b>Currencies:</b> {currencies}
               </p>
               <p>
-                <b>Languages:</b> {Object.keys(country.languages)[0]}
+                <b>Languages:</b> {languages}
               </p>
             </div>
           </div>
