@@ -1,4 +1,4 @@
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import { Country } from '../models/Country';
 import { Card } from '../components/common/Card';
 import { BackButton } from '../components/common/BackButton';
