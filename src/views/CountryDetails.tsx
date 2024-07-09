@@ -1,6 +1,7 @@
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { Country } from '../models/Country';
 import { Card } from '../components/common/Card';
+import { BackButton } from '../components/common/BackButton';
 
 // TODO: Should there be a check for if the country has been retrieved?
 export const CountryDetails = () => {
