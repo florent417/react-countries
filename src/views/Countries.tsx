@@ -6,6 +6,7 @@ import {
   getAllRegions,
   getCountriesByRegion,
 } from '../services/CountriesService';
+import { CountriesRegionFilter } from '../components/countries/CountriesRegionFilter';
 
 const Countries = () => {
   const [countries, setCountries] = useState<Country[]>([]);
@@ -43,21 +44,11 @@ const Countries = () => {
   return (
     <>
       <div className="flex flex-col gap-y-8 w-11/12 mx-auto">
-        <select
-          className="bg-white dark:bg-dark-blue self-end w-1/6 h-16 pl-6 text-xl rounded-md shadow-md"
-          onChange={(event) => setSelectedRegion(event.target.value)}
-          defaultValue={selectedRegion}
-        >
-          {/* TODO: Shoudl this be disabled and hidden? */}
-          <option className="pl-6" value="" disabled hidden>
-            Filter by region
-          </option>
-          {regions.map((region) => (
-            <option className="pl-12" key={region} value={region}>
-              {region}
-            </option>
-          ))}
-        </select>
+        <CountriesRegionFilter
+          regions={regions}
+          selectedRegion={selectedRegion}
+          onChange={setSelectedRegion}
+        />
         <div className="flex justify-between flex-wrap gap-x-8 gap-y-16 w-full">
           {countries.map((country) => (
             <CountryCard key={country.name.common} country={country} />
