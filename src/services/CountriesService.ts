@@ -8,6 +8,11 @@ const getAllCountries = async () => {
   return response.data;
 };
 
+const getCountriesBySearch = async (country: string) => {
+  const response = await axios.get<Country[]>(`${BASE_URL}/name/${country}`);
+  return response.data;
+};
+
 // TODO: Make private
 const getFilteredResponse = async (fields: string[]) => {
   const fieldsStr = fields.join(',');
@@ -27,4 +32,9 @@ const getCountriesByRegion = async (region: string) => {
   return response.data;
 };
 
-export { getAllCountries, getAllRegions, getCountriesByRegion };
+export {
+  getAllCountries,
+  getCountriesBySearch,
+  getAllRegions,
+  getCountriesByRegion,
+};
