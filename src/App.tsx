@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Countries } from './views/Countries';
 import { Layout } from './components/ui/layout/Layout';
+import { RecoilRoot } from 'recoil';
 
 const router = createBrowserRouter([
   {
@@ -11,5 +12,9 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <RecoilRoot>
+      <RouterProvider router={router}></RouterProvider>
+    </RecoilRoot>
+  );
 }
