@@ -3,13 +3,11 @@ import { useDarkMode } from '../hooks/useDarkMode';
 
 // SVG: https://fontawesome.com/icons/moon?f=classic&s=solid
 const DarkModeSwitch = () => {
-  const [colorTheme, setTheme] = useDarkMode();
-  const [isDarkMode, setIsDarkMode] = useState(
-    colorTheme === 'light' ? true : false,
-  );
+  const [theme, toggleTheme] = useDarkMode();
+  const [isDarkMode, setIsDarkMode] = useState(theme === 'dark' ? true : false);
 
   const toggleDarkMode = () => {
-    setTheme(colorTheme);
+    toggleTheme();
     setIsDarkMode((prevMode) => !prevMode);
   };
 
