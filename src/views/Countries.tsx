@@ -8,7 +8,7 @@ import {
   getCountriesByRegion,
 } from '../services/CountriesService';
 import { CountriesSearch } from '../components/countries/CountriesSearch';
-import { CountriesRegionFilter } from '../components/countries/CountriesRegionFilter';
+import { CountriesRegionSelect } from '../components/countries/CountriesRegionSelect';
 
 const Countries = () => {
   const [countries, setCountries] = useState<Country[]>([]);
@@ -61,12 +61,12 @@ const Countries = () => {
     const countries = await getCountriesBySearch(searchText);
     setCountries(countries);
   };
-  // TODO: How to make them fall to the left after search and only 1 row_
+  // TODO: How to make them fall to the left after search and only 1 row?
   return (
     <div className="flex flex-col gap-y-8 w-11/12 mx-auto pt-8">
       <div className="flex justify-between mb-8">
         <CountriesSearch onChange={setSearchText} value={searchText} />
-        <CountriesRegionFilter
+        <CountriesRegionSelect
           regions={regions}
           selectedRegion={selectedRegion}
           onChange={setSelectedRegion}

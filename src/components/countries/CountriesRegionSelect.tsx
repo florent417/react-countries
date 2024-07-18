@@ -5,7 +5,7 @@ type Props = {
   onChange: (region: string) => void;
 };
 
-export const CountriesRegionFilter = ({
+export const CountriesRegionSelect = ({
   regions,
   selectedRegion,
   onChange,
@@ -28,4 +28,3 @@ export const CountriesRegionFilter = ({
     </select>
   );
 };
-// TODO: Naming of file
