@@ -7,9 +7,16 @@ type Props = {
 const CountryCard = ({ country }: Props) => {
   return (
     <Card className="bg-white dark:bg-dark-blue rounded-md flex-[0_0_20%] shadow-md overflow-hidden">
-      <img className="h-1/2 shadow-sm w-full" src={country.flags.png} />
+      <div className="h-1/2 shadow-sm">
+        <img
+          className="h-full m-auto"
+          src={country.flags.png}
+          alt={country.name.common}
+        />
+      </div>
       <section className="h-1/2 text-left p-6">
         <p className="text-xl font-bold mb-3">{country.name.common}</p>
+        {/* TODO: Check on this */}
         <div>
           <p>
             <b>Population:</b> {country.population.toLocaleString('EN-US')}
