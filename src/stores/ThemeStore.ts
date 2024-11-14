@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-let defaultTheme = 'light';
+let defaultTheme = 'dark';
 if (typeof window !== 'undefined') {
   const savedTheme = window.localStorage.getItem('theme'); // save the users prefered mode
   if (savedTheme) {
