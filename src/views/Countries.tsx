@@ -17,6 +17,7 @@ const Countries = () => {
   const [regions, setRegions] = useState<string[]>([]);
   const [selectedRegion, setSelectedRegion] = useState<string>('');
 
+  // TODO: Is this necessary?
   useEffect(() => {
     fetchAllCountries();
     fetchAllRegions();
@@ -88,6 +89,13 @@ const Countries = () => {
     setFilteredCountries(filteredByRegionCountries);
   };
 
+  const onRegionChange = (region: string) => {
+    if (searchText && searchText.trim() !== '') {
+      setSearchText('');
+    }
+    setSelectedRegion(region);
+  };
+
   // TODO: Extend with errors or blank countries
   const countriesToShow = () =>
     filteredCountries.length > 0 ? filteredCountries : countries;
@@ -100,7 +108,7 @@ const Countries = () => {
         <CountriesRegionSelect
           regions={regions}
           selectedRegion={selectedRegion}
-          onChange={setSelectedRegion}
+          onChange={onRegionChange}
         />
       </div>
       <div className="flex flex-wrap gap-x-8 gap-y-16 justify-between">
