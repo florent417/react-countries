@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useDarkMode } from '../../hooks/useDarkMode';
 
 type Props = {
@@ -7,14 +6,8 @@ type Props = {
 };
 
 const CountriesSearch = ({ value, onChange }: Props) => {
-  // TODO: How to use the dark mode setting here, maybe prop drilling or state management
-  const [colorTheme] = useDarkMode();
-
-  // TODO: shouldnt thios work?
-  useEffect(() => {
-    fillColor = colorTheme === 'light' ? '#808080' : '#FFFFFF';
-  }, [colorTheme]);
-  let fillColor = '';
+  const [theme] = useDarkMode();
+  const fillColor = theme === 'light' ? '#808080' : '#FFFFFF';
 
   return (
     <div className="flex w-1/3 gap-6 h-16 bg-white dark:bg-dark-blue shadow-md dark:text-white rounded-md overflow-hidden">

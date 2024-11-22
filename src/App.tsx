@@ -3,6 +3,7 @@ import { Countries } from './views/Countries';
 import { Layout } from './components/ui/layout/Layout';
 import { CountryDetails } from './views/CountryDetails';
 import { countryDetailsLoader } from './loaders/CountryDetailsLoader';
+import { RecoilRoot } from 'recoil';
 
 // TODO: How to add country details as a child of Countries list
 const router = createBrowserRouter([
@@ -21,5 +22,9 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <RecoilRoot>
+      <RouterProvider router={router}></RouterProvider>
+    </RecoilRoot>
+  );
 }

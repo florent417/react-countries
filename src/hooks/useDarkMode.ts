@@ -1,21 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { themeState } from '../stores/ThemeStore';
 
-const useDarkMode = () => {
-  const [theme, setTheme] = useState<string>(localStorage.theme);
+export const useDarkMode = () => {
+  const [theme, setTheme] = useRecoilState(themeState);
 
-  const colorTheme = theme === 'dark' ? 'light' : 'dark';
-
-  localStorage.setItem('theme', theme);
-
-  useEffect(() => {
+  const saveTheme = (chosenTheme: 'light' | 'dark') => {
     const root = window.document.documentElement;
-    root.classList.remove(colorTheme);
-    root.classList.add(theme);
-    if (localStorage.theme == 'dark') localStorage.removeItem('theme');
-    else localStorage.setItem('theme', theme);
-  }, [theme, colorTheme]);
+    root.classList.remove(theme);
+    root.classList.add(chosenTheme);
+    setTheme(chosenTheme);
+    window.localStorage.setItem('theme', chosenTheme);
+  };
 
-  return [colorTheme, setTheme] as const;
+  const toggleTheme = () => {
+    saveTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
+  return [theme, toggleTheme] as const;
 };
-
-export { useDarkMode };

@@ -39,6 +39,11 @@ const getCountry = async (country: string) => {
   return response.data[0];
 };
 
+const getCountriesByRegionAndSearch = async (region: string) => {
+  const response = await axios.get<Country[]>(`${BASE_URL}/region/${region}`);
+  return response.data;
+};
+
 export {
   getAllCountries,
   getCountriesBySearch,
