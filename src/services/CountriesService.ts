@@ -39,6 +39,14 @@ const getCountry = async (country: string) => {
   return response.data[0];
 };
 
+// TODO: Check if multiple countries show for the same code
+const getCountriesByCountryCodes = async (codes: string[]) => {
+  const response = await axios.get<Country[]>(
+    `${BASE_URL}/alpha/?codes=${codes.join(',')}`,
+  );
+  return response.data;
+};
+
 const getCountriesByRegionAndSearch = async (region: string) => {
   const response = await axios.get<Country[]>(`${BASE_URL}/region/${region}`);
   return response.data;
@@ -50,4 +58,5 @@ export {
   getAllRegions,
   getCountriesByRegion,
   getCountry,
+  getCountriesByCountryCodes,
 };
