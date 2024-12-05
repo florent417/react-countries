@@ -15,7 +15,7 @@ export const CountryButton = ({ countryName }: Props) => {
   return (
     // TODO: FIxed size?
     <button type="button" onClick={handleClick}>
-      <p className="bg-white dark:bg-dark-blue rounded-sm shadow-sm px-4 py-1">
+      <p className="bg-white dark:bg-dark-blue rounded-sm shadow-sm px-4 py-1 hover:px-5 hover:py-2">
         {countryName}
       </p>
     </button>
