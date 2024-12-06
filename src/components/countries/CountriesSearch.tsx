@@ -10,7 +10,7 @@ const CountriesSearch = ({ value, onChange }: Props) => {
   const fillColor = theme === 'light' ? '#808080' : '#FFFFFF';
 
   return (
-    <div className="flex w-1/3 gap-6 h-16 bg-white dark:bg-dark-blue shadow-md dark:text-white rounded-md overflow-hidden">
+    <div className="flex md:w-1/3 gap-6 h-16 bg-white dark:bg-dark-blue shadow-md dark:text-white rounded-md overflow-hidden">
       {/* TODO: Should this be a button, is that necessary in this case? */}
       <span>
         <svg
