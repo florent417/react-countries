@@ -10,12 +10,12 @@ const CountriesSearch = ({ value, onChange }: Props) => {
   const fillColor = theme === 'light' ? '#808080' : '#FFFFFF';
 
   return (
-    <div className="flex w-1/3 gap-6 h-16 bg-white dark:bg-dark-blue shadow-md dark:text-white rounded-md overflow-hidden">
+    <div className="flex md:w-1/3 gap-6 h-16 bg-white dark:bg-dark-blue shadow-md dark:text-white rounded-md overflow-hidden focus-within:border-2 focus-within:border-cyan-600 group">
       {/* TODO: Should this be a button, is that necessary in this case? */}
       <span>
         <svg
           fill={fillColor}
-          className="float-left ml-6 h-full"
+          className="float-left ml-6 h-full hidden group-focus-within:inline-block"
           xmlns="http://www.w3.org/2000/svg"
           height="32"
           width="20"
@@ -25,8 +25,6 @@ const CountriesSearch = ({ value, onChange }: Props) => {
         </svg>
       </span>
       {/* TODO: Should this be its own shared component? */}
-      {/* TODO: Should there be an outline? */}
-      {/* TODO: Should this be wrapping everything, incl. the SVG */}
       <input
         className="bg-white text-xl dark:bg-dark-blue dark:text-white dark:placeholder:text-white w-full indent-2 outline-none"
         value={value}
