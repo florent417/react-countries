@@ -102,8 +102,8 @@ const Countries = () => {
 
   // TODO: How to make them fall to the left after search and only 1 row?
   return (
-    <div className="flex flex-col gap-y-8 w-11/12 mx-auto pt-8">
-      <div className="flex justify-between mb-8">
+    <div className="flex flex-col gap-y-8 w-11/12 mx-auto md:pt-8">
+      <div className="flex flex-col mb-8 max-sm:gap-y-10 md:flex-row md:justify-between">
         <CountriesSearch onChange={setSearchText} value={searchText} />
         <CountriesRegionSelect
           regions={regions}
@@ -111,7 +111,7 @@ const Countries = () => {
           onChange={onRegionChange}
         />
       </div>
-      <div className="flex flex-wrap gap-x-8 gap-y-16 justify-between">
+      <div className="flex flex-col gap-y-8 max-sm:self-center max-sm:w-3/4 md:flex-row md:gap-y-16 md:gap-x-8 md:flex-wrap md:justify-between">
         {countriesToShow().map((country) => (
           <CountryCard key={country.name.common} country={country} />
         ))}

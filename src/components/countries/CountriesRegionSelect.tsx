@@ -12,7 +12,7 @@ export const CountriesRegionSelect = ({
 }: Props) => {
   return (
     <select
-      className="bg-white dark:bg-dark-blue self-end w-1/6 h-16 pl-6 text-xl rounded-md shadow-md hover:cursor-pointer"
+      className="bg-white dark:bg-dark-blue md:self-end w-1/2 md:w-1/6 h-16 pl-6 text-xl rounded-md shadow-md hover:cursor-pointer"
       onChange={(event) => onChange(event.target.value)}
       defaultValue={selectedRegion}
     >

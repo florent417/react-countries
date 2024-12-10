@@ -1,4 +1,5 @@
 import { useLoaderData } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { Card } from '../components/common/Card';
 import { BackButton } from '../components/common/BackButton';
 import { CountryDetailsData } from '../loaders/CountryDetailsLoader';
@@ -9,6 +10,21 @@ export const CountryDetails = () => {
   // TODO: Should this be changed?
   const { countryData, borderCountries } =
     useLoaderData() as CountryDetailsData;
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 640); // Tailwind sm screen size
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 640);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const currencies = countryData.currencies
     ? Object.keys(countryData.currencies)
@@ -27,13 +43,18 @@ export const CountryDetails = () => {
     : countryData.name.official;
 
   return (
-    <div className="flex flex-col w-11/12 items-start gap-y-16 mt-8">
+    <div className="flex flex-col w-11/12 items-start gap-y-16 md:mt-8">
       <BackButton />
-      <Card className="flex justify-between w-full">
-        <img className="w-5/12 h-2/3 object-fill" src={countryData.flags.svg} />
-        <section className="text-left p-6 w-5/12">
-          <p className="text-3xl font-bold mb-6">{countryData!.name.common}</p>
-          <div className="flex justify-between m-auto gap-x-10">
+      <Card className="flex flex-col md:w-full md:flex-row md:justify-between">
+        <img
+          className="self-center h-1/3 max-sm:w-11/12 md:w-5/12 md:h-2/3 md:object-fill"
+          src={countryData.flags.svg}
+        />
+        <section className="text-left max-sm:self-center max-sm:mt-8 max-sm:w-11/12 md:p-6 md:w-5/12">
+          <p className="font-bold text-2xl mb-4 md:mb-6 md:text-3xl">
+            {countryData!.name.common}
+          </p>
+          <div className="flex justify-between m-auto max-sm:text-sm max-sm:flex-col max-sm:gap-y-10 md:gap-x-10">
             <div className="flex flex-col gap-y-2">
               <p>
                 <b>Native Name:</b> {nativeName}
@@ -66,15 +87,30 @@ export const CountryDetails = () => {
           </div>
           {/* TODO */}
           {borderCountries && (
-            <div className="flex mt-12 gap-x-2 gap-y-4 items-center flex-wrap">
-              <b className="mr-2">Border Countries:</b>
-              {borderCountries.map((borderCountry) => (
-                // TODO: FIxed size?
-                <CountryButton
-                  countryName={borderCountry.name.common}
-                  key={borderCountry.name.common}
-                />
-              ))}
+            <div className="flex mt-12 gap-x-2 gap-y-4 max-sm:flex-col md:items-center md:flex-wrap">
+              <b className="mr-2 max-sm:text-md">Border Countries:</b>
+              {isMobile ? (
+                <span className="md:hidden flex flex-wrap gap-x-2 gap-y-2">
+                  {borderCountries.map((borderCountry) => (
+                    // TODO: FIxed size?
+                    <CountryButton
+                      className="max-sm:text-sm"
+                      countryName={borderCountry.name.common}
+                      key={borderCountry.name.common}
+                    />
+                  ))}
+                </span>
+              ) : (
+                <>
+                  {borderCountries.map((borderCountry) => (
+                    // TODO: FIxed size?
+                    <CountryButton
+                      countryName={borderCountry.name.common}
+                      key={borderCountry.name.common}
+                    />
+                  ))}
+                </>
+              )}
             </div>
           )}
         </section>

@@ -31,7 +31,7 @@ export const BackButton = () => {
           />
         )}
       </svg>
-      <p className="inline-block text-base">Back</p>
+      <p className="inline-block text-sm md:text-base">Back</p>
     </button>
   );
 };

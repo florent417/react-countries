@@ -9,7 +9,7 @@ type Props = {
 // TODO: Should the a encompass all tags instead of div/card?
 const CountryCard = ({ country }: Props) => {
   return (
-    <Card className="bg-white dark:bg-dark-blue rounded-md flex-[0_0_20%] hover:flex-[0_0_22%] flex-shrink shadow-md overflow-hidden">
+    <Card className="bg-white dark:bg-dark-blue rounded-md shadow-md overflow-hidden md:flex-[0_0_20%] md:hover:flex-[0_0_22%]">
       <Link to={`/country/${country.name.common}`}>
         {/* TODO: How to fit image */}
         <img
