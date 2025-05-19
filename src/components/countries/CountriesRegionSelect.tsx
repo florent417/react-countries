@@ -1,8 +1,9 @@
+import { ChangeEvent } from 'react';
+
 type Props = {
-  regions: string[];
-  selectedRegion: string;
-  // TODO: Function naming?
-  onChange: (region: string) => void;
+  regions: string[] | null;
+  selectedRegion: string | null;
+  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 };
 
 export const CountriesRegionSelect = ({
@@ -12,16 +13,14 @@ export const CountriesRegionSelect = ({
 }: Props) => {
   return (
     <select
-      className="bg-white dark:bg-dark-blue md:self-end w-1/2 md:w-1/6 h-16 pl-6 text-xl rounded-md shadow-md hover:cursor-pointer"
-      onChange={(event) => onChange(event.target.value)}
-      defaultValue={selectedRegion}
+      className="bg-white dark:bg-dark-blue md:self-end w-fit h-16 px-6 text-xl rounded-md shadow-md hover:cursor-pointer"
+      onChange={(e) => onChange(e)}
+      defaultValue={selectedRegion || ''} // if no selectedRegion is null we default to "All regions"
     >
-      {/* TODO: Shoudl this be disabled and hidden? */}
-      <option className="pl-6" value="" disabled hidden>
-        Filter by region
-      </option>
-      {regions.map((region) => (
-        <option className="pl-12" key={region} value={region}>
+      {/* Might have diviated from the design here, but I think it's a better user experience to have the first option be "All regions" so we can go back to the original view. */}
+      <option value="">All regions</option>
+      {regions?.map((region) => (
+        <option key={region} value={region}>
           {region}
         </option>
       ))}

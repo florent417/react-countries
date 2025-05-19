@@ -1,31 +1,19 @@
-import { useLoaderData } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { Card } from '../components/common/Card';
+import { Link, useLoaderData } from 'react-router-dom';
 import { BackButton } from '../components/common/BackButton';
 import { CountryDetailsData } from '../loaders/CountryDetailsLoader';
-import { CountryButton } from '../components/countries/CountryButton';
+import { DisplayValue } from '../components/common/DisplayValue';
 
 // TODO: Should there be a check for if the country has been retrieved?
+// Anwser: Yes. You would probably want to show a loading spinner until the contry has been fetched.
+// this would be done and returned from the loader or fixed with suspense (react suspense).
 export const CountryDetails = () => {
   // TODO: Should this be changed?
+  // Anwser: Well you should be consistent with the way you are fetching the data across the app.
+  // I would probably use a custom hook to fetch the data and then use a lib like tanstack query (react query) or read more on react routers data loaders and how they can be used to the fullest.
   const { countryData, borderCountries } =
     useLoaderData() as CountryDetailsData;
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 640); // Tailwind sm screen size
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 640);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    // Cleanup event listener on component unmount
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
+  // don't like this, but it works and i dont feel like spending the time making it prettier :D
   const currencies = countryData.currencies
     ? Object.keys(countryData.currencies)
         .map((key) => countryData.currencies[key].name)
@@ -34,87 +22,56 @@ export const CountryDetails = () => {
   const languages = countryData.languages
     ? Object.values(countryData.languages).sort().join(', ')
     : null;
-  const topLevelDomains = countryData.tld?.join(', ');
-  // TODO: Should it be done this way?
-  const nativeName = countryData.name.nativeName
-    ? countryData.name.nativeName[
-        Object.keys(countryData.name.nativeName).pop()!
-      ].common
-    : countryData.name.official;
+  const topLevelDomains = countryData.tld?.join(', ') || null;
+  const nativeName =
+    Object.values(countryData.name.nativeName ?? {})[0]?.common ??
+    countryData.name.official;
 
   return (
-    <div className="flex flex-col w-11/12 items-start gap-y-16 md:mt-8">
+    <div className="w-full px-4 md:px-12 grid gap-8 md:gap-16 md:mt-8">
       <BackButton />
-      <Card className="flex flex-col md:w-full md:flex-row md:justify-between">
+      <div className="grid md:grid-cols-2 gap-8 md:gap-16">
         <img
-          className="self-center h-1/3 max-sm:w-11/12 md:w-5/12 md:h-2/3 md:object-fill"
+          className="w-full h-auto md:h-2/3 md:object-fill justify-self-center px-4 md:px-0"
           src={countryData.flags.svg}
+          alt={`Flag of ${countryData.name.common}`}
         />
-        <section className="text-left max-sm:self-center max-sm:mt-8 max-sm:w-11/12 md:p-6 md:w-5/12">
-          <p className="font-bold text-2xl mb-4 md:mb-6 md:text-3xl">
-            {countryData!.name.common}
-          </p>
-          <div className="flex justify-between m-auto max-sm:text-sm max-sm:flex-col max-sm:gap-y-10 md:gap-x-10">
-            <div className="flex flex-col gap-y-2">
-              <p>
-                <b>Native Name:</b> {nativeName}
-              </p>
-              <p>
-                <b>Population:</b>{' '}
-                {countryData.population.toLocaleString('EN-US')}
-              </p>
-              <p>
-                <b>Region:</b> {countryData.region}
-              </p>
-              <p>
-                <b>Sub Region:</b> {countryData.subregion}
-              </p>
-              <p>
-                <b>Capital:</b> {countryData.capital}
-              </p>
-            </div>
-            <div className="flex flex-col gap-y-2">
-              <p>
-                <b>Top Level Domain:</b> {topLevelDomains}
-              </p>
-              <p>
-                <b>Currencies:</b> {currencies}
-              </p>
-              <p>
-                <b>Languages:</b> {languages}
-              </p>
-            </div>
+        <section className="w-full justify-self-center md:justify-self-start px-4 md:px-0">
+          <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6">
+            {countryData.name.common}
+          </h1>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-x-10 text-sm md:text-base">
+            <DisplayValue label="Native Name" value={nativeName} />
+            <DisplayValue label="Top Level Domain" value={topLevelDomains} />
+            <DisplayValue
+              label="Population"
+              value={countryData.population.toLocaleString(navigator.language)}
+            />
+            <DisplayValue label="Currencies" value={currencies} />
+            <DisplayValue label="Region" value={countryData.region} />
+            <DisplayValue label="Languages" value={languages} />
+            <DisplayValue label="Sub Region" value={countryData.subregion} />
+            <DisplayValue label="Capital" value={countryData.capital} />
           </div>
-          {/* TODO */}
           {borderCountries && (
-            <div className="flex mt-12 gap-x-2 gap-y-4 max-sm:flex-col md:items-center md:flex-wrap">
-              <b className="mr-2 max-sm:text-md">Border Countries:</b>
-              {isMobile ? (
-                <span className="md:hidden flex flex-wrap gap-x-2 gap-y-2">
-                  {borderCountries.map((borderCountry) => (
-                    // TODO: FIxed size?
-                    <CountryButton
-                      className="max-sm:text-sm"
-                      countryName={borderCountry.name.common}
-                      key={borderCountry.name.common}
-                    />
-                  ))}
-                </span>
-              ) : (
-                <>
-                  {borderCountries.map((borderCountry) => (
-                    // TODO: FIxed size?
-                    <CountryButton
-                      countryName={borderCountry.name.common}
-                      key={borderCountry.name.common}
-                    />
-                  ))}
-                </>
-              )}
+            <div className="mt-8 md:mt-12 grid gap-4">
+              <b className="text-sm md:text-base">Border Countries:</b>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                {borderCountries.map((borderCountry) => (
+                  <Link
+                    to={`/country/${borderCountry.name.common.toLowerCase()}`}
+                    key={borderCountry.name.common}
+                  >
+                    <p className="bg-white dark:bg-dark-blue rounded-sm shadow-sm px-4 py-1 text-sm md:text-base transition-all hover:scale-110 text-center">
+                      {borderCountry.name.common}
+                    </p>
+                  </Link>
+                ))}
+              </div>
             </div>
           )}
         </section>
-      </Card>
+      </div>
     </div>
   );
 };
