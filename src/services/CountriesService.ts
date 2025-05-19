@@ -24,7 +24,9 @@ const getFilteredResponse = async (fields: string[]) => {
 
 const getAllRegions = async () => {
   const responseData = await getFilteredResponse(['region']);
-  return responseData.map((entry) => entry.region);
+  const regions = responseData.map((entry) => entry.region);
+  const uniqueRegions = Array.from(new Set(regions)).sort();
+  return uniqueRegions;
 };
 
 const getCountriesByRegion = async (region: string) => {
@@ -44,11 +46,6 @@ const getCountriesByCountryCodes = async (codes: string[]) => {
   const response = await axios.get<Country[]>(
     `${BASE_URL}/alpha/?codes=${codes.join(',')}`,
   );
-  return response.data;
-};
-
-const getCountriesByRegionAndSearch = async (region: string) => {
-  const response = await axios.get<Country[]>(`${BASE_URL}/region/${region}`);
   return response.data;
 };
 

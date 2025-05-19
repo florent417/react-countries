@@ -1,11 +1,10 @@
 import { useDarkMode } from '../../hooks/useDarkMode';
 
 type Props = {
-  value: string;
-  onChange: (event: string) => void;
+  onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const CountriesSearch = ({ value, onChange }: Props) => {
+export const CountriesSearch = ({ onSearchChange }: Props) => {
   const [theme] = useDarkMode();
   const fillColor = theme === 'light' ? '#808080' : '#FFFFFF';
 
@@ -27,13 +26,10 @@ const CountriesSearch = ({ value, onChange }: Props) => {
       {/* TODO: Should this be its own shared component? */}
       <input
         className="bg-white text-xl dark:bg-dark-blue dark:text-white dark:placeholder:text-white w-full indent-2 outline-none"
-        value={value}
         type="text"
         placeholder="Search for a country..."
-        onChange={(event) => onChange(event.target.value)}
+        onChange={onSearchChange}
       />
     </div>
   );
 };
-
-export { CountriesSearch };

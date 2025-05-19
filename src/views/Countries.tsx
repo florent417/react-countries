@@ -1,123 +1,48 @@
-import { useEffect, useState } from 'react';
-import { Country } from '../models/Country';
+import { ChangeEvent, useState } from 'react';
 import { CountryCard } from '../components/countries/CountryCard';
-import {
-  getAllCountries,
-  getCountriesBySearch,
-  getAllRegions,
-  getCountriesByRegion,
-} from '../services/CountriesService';
 import { CountriesSearch } from '../components/countries/CountriesSearch';
 import { CountriesRegionSelect } from '../components/countries/CountriesRegionSelect';
+import { useCountries } from '../hooks/useCountries';
 
-const Countries = () => {
-  const [countries, setCountries] = useState<Country[]>([]);
-  const [filteredCountries, setFilteredCountries] = useState<Country[]>([]);
-  const [searchText, setSearchText] = useState<string>('');
-  const [regions, setRegions] = useState<string[]>([]);
-  const [selectedRegion, setSelectedRegion] = useState<string>('');
+export const Countries = () => {
+  const [searchValue, setSearchValue] = useState('');
+  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
 
-  // TODO: Is this necessary?
-  useEffect(() => {
-    fetchAllCountries();
-    fetchAllRegions();
-  }, []);
+  const { filteredCountries, countries, regions, loading, error } =
+    useCountries(searchValue, selectedRegion);
 
-  // TODO: can we see timeouts, to be certain that they have been deleted?
-  // TODO: can we use a non async timeout in this case?
-  useEffect(() => {
-    if (
-      !searchText &&
-      searchText.trim() === '' &&
-      !selectedRegion &&
-      selectedRegion.trim() === ''
-    ) {
-      setFilteredCountries([]);
-      fetchAllCountries();
-    } else if (
-      searchText &&
-      searchText.trim() !== '' &&
-      selectedRegion &&
-      selectedRegion.trim() !== ''
-    ) {
-      const timeOut = setTimeout(() => {
-        fetchFilteredCountries();
-      }, 1000);
-      return () => clearTimeout(timeOut);
-    } else if (
-      !searchText &&
-      searchText.trim() === '' &&
-      selectedRegion &&
-      selectedRegion.trim() !== ''
-    ) {
-      fetchCountriesByRegion();
-    } else {
-      const timeOut = setTimeout(() => {
-        fetchSearchCountries();
-      }, 1000);
-      return () => clearTimeout(timeOut);
-    }
-  }, [searchText, selectedRegion]);
-
-  const fetchAllCountries = async () => {
-    const countries = await getAllCountries();
-    setCountries(countries);
-  };
-
-  const fetchAllRegions = async () => {
-    const regions = await getAllRegions();
-    const regionsSet = new Set(regions);
-    const sortedRegions = Array.from(regionsSet).sort();
-    setRegions(sortedRegions);
-  };
-
-  const fetchCountriesByRegion = async () => {
-    const countries = await getCountriesByRegion(selectedRegion);
-    setFilteredCountries(countries);
-  };
-
-  const fetchSearchCountries = async () => {
-    const countries = await getCountriesBySearch(searchText);
-    setFilteredCountries(countries);
-  };
-
-  const fetchFilteredCountries = async () => {
-    const countries = await getCountriesBySearch(searchText);
-    const filteredByRegionCountries = countries.filter(
-      (country) => country.region === selectedRegion,
-    );
-    setFilteredCountries(filteredByRegionCountries);
-  };
-
-  const onRegionChange = (region: string) => {
-    if (searchText && searchText.trim() !== '') {
-      setSearchText('');
-    }
+  const onRegionChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const region = e.target.value === '' ? null : e.target.value;
     setSelectedRegion(region);
   };
 
-  // TODO: Extend with errors or blank countries
-  const countriesToShow = () =>
-    filteredCountries.length > 0 ? filteredCountries : countries;
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value.trim());
+  };
 
-  // TODO: How to make them fall to the left after search and only 1 row?
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
     <div className="flex flex-col gap-y-8 w-11/12 mx-auto md:pt-8">
       <div className="flex flex-col mb-8 max-sm:gap-y-10 md:flex-row md:justify-between">
-        <CountriesSearch onChange={setSearchText} value={searchText} />
+        <CountriesSearch onSearchChange={handleSearchChange} />
         <CountriesRegionSelect
           regions={regions}
           selectedRegion={selectedRegion}
           onChange={onRegionChange}
         />
       </div>
-      <div className="flex flex-col gap-y-8 max-sm:self-center max-sm:w-3/4 md:flex-row md:gap-y-16 md:gap-x-8 md:flex-wrap md:justify-between">
-        {countriesToShow().map((country) => (
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {(filteredCountries || countries || []).map((country) => (
           <CountryCard key={country.name.common} country={country} />
         ))}
       </div>
     </div>
   );
 };
-
-export { Countries };

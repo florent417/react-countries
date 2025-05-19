@@ -1,38 +1,34 @@
 import { Link } from 'react-router-dom';
 import { Country } from '../../models/Country';
 import { Card } from '../common/Card';
+import { DisplayValue } from '../common/DisplayValue';
+
 type Props = {
   country: Country;
 };
 
-// TODO: Check the ordering of tags
-// TODO: Should the a encompass all tags instead of div/card?
-const CountryCard = ({ country }: Props) => {
+export const CountryCard = ({ country }: Props) => {
   return (
-    <Card className="bg-white dark:bg-dark-blue rounded-md shadow-md overflow-hidden md:flex-[0_0_20%] md:hover:flex-[0_0_22%]">
-      <Link to={`/country/${country.name.common}`}>
-        {/* TODO: How to fit image */}
+    <Link to={`/country/${country.name.common.toLowerCase()}`}>
+      <Card className="bg-white dark:bg-dark-blue rounded-md shadow-md h-full">
+        {/* TODO: How to fit image? answer: use object-cover (css: object-fit: cover) */}
         <img
-          className="object-contain w-full h-1/2 shadow-sm"
+          className="object-cover w-full h-1/2 shadow-sm"
           src={country.flags.svg}
+          alt={`Flag of ${country.name.common}`}
         />
         <section className="text-left p-6">
           <p className="text-xl font-bold mb-3">{country.name.common}</p>
           <div>
-            <p>
-              <b>Population:</b> {country.population.toLocaleString('EN-US')}
-            </p>
-            <p>
-              <b>Region:</b> {country.region}
-            </p>
-            <p>
-              <b>Capital:</b> {country.capital}
-            </p>
+            <DisplayValue
+              label="Population"
+              value={country.population.toLocaleString(navigator.language)}
+            />
+            <DisplayValue label="Region" value={country.region} />
+            <DisplayValue label="Capital" value={country.capital} />
           </div>
         </section>
-      </Link>
-    </Card>
+      </Card>
+    </Link>
   );
 };
-
-export { CountryCard };
